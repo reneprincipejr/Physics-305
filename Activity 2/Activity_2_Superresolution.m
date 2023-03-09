@@ -1,17 +1,39 @@
-Ioriginal = imread('cameraman.tif');
-% Ioriginal = imread('image18.jpg');
+% Ioriginal = imread('cameraman.tif');
+Ioriginal = imread('cup_blur_2.jpg');
 imshow(Ioriginal)
 title('Original Image')
 %% Simulate and Restore Motion Blur Without Noise
-PSF = fspecial('motion',12,0);
+PSF = fspecial('motion',7,0);
 Idouble = im2double(Ioriginal);
 blurred = imfilter(Idouble, PSF,'conv','circular');
+subplot(1,2,1);
+imshow(Ioriginal)
+title('Original Image')
+subplot(1,2,2);
 imshow(blurred)
 title('Blurred Image') 
 %% 
-wnr1 = deconvwnr(blurred,PSF);
+% wnr1 = deconvwnr(blurred,PSF);
+PSF = fspecial('motion',1.5,0);
+wnr1 = deconvwnr(Ioriginal,PSF);
+subplot(1,2,1);
+imshow(Ioriginal)
+title('Original Image')
+subplot(1,2,2);
 imshow(wnr1)
 title('Restored Blurred Image')
+%% 
+% wnr1 = deconvwnr(blurred,PSF)
+for i = 1:0.1:2
+    PSF = fspecial('motion',i,0);
+    wnr1 = deconvwnr(Ioriginal,PSF);
+    subplot(1,2,1);
+    imshow(Ioriginal)
+    title('Original Image')
+    subplot(1,2,2);
+    imshow(wnr1)
+    title('Restored Blurred Image (i = ' + i + ')')
+end
 %% Simulate and Restore Motion Blur and Gaussian Noise
 noise_mean = 0;
 noise_var = 0.0001;
