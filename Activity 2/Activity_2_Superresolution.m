@@ -35,6 +35,7 @@ for i = 1:0.1:2
     title('Restored Blurred Image (i = ' + i + ')')
 end
 %% Simulate and Restore Motion Blur and Gaussian Noise
+blurred = imread('cup_blur_2.jpg');
 noise_mean = 0;
 noise_var = 0.0001;
 blurred_noisy = imnoise(blurred,'gaussian',noise_mean,noise_var);
